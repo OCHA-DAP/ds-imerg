@@ -30,7 +30,9 @@ def download_recent_imerg():
     for date in pd.date_range(
         "2024-06-01", datetime.date.today() - pd.DateOffset(days=1)
     ):
-        output_blob = f"imerg/v7/{date.strftime('%Y-%m-%d')}.tif"
+        output_blob = (
+            f"imerg/v7/imerg-daily-late-{date.strftime('%Y-%m-%d')}.tif"
+        )
         if output_blob in existing_files:
             print(f"{output_blob} already exists, skipping")
             continue
