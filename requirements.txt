@@ -1,0 +1,4 @@
+azure-storage-blob==12.20.0
+pandas==2.2.2
+requests==2.32.3
+xarray==2024.6.0

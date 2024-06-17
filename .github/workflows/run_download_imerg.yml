@@ -1,4 +1,4 @@
-name: Run main script
+name: Download IMERG
 
 on:
   schedule:
