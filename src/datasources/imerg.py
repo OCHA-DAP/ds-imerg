@@ -50,23 +50,21 @@ def download_imerg(
 ):
     if os.path.exists(save_path):
         os.remove(save_path)
-    version_letter = "b" if version == 7 else ""
+    version_letter = "B" if version == 7 else ""
     url = IMERG_BASE_URL.format(
         run=run, date=date, version=version, version_letter=version_letter
     )
     if verbose:
         print("downloading from " + url)
     result = requests.get(url)
-    try:
-        result.raise_for_status()
-        f = open(save_path, "wb")
-        f.write(result.content)
-        f.close()
-        if verbose:
-            print("contents of URL written to " + save_path)
-    except requests.exceptions.HTTPError as err:
-        print(err)
-        print("failed to download from " + url)
+    result.raise_for_status()
+    if not os.path.exists(os.path.dirname(save_path)):
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    f = open(save_path, "wb")
+    f.write(result.content)
+    f.close()
+    if verbose:
+        print("contents of URL written to " + save_path)
 
 
 def process_imerg(path: str = "temp/imerg_temp.nc"):
