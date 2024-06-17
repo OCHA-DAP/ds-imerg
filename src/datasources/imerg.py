@@ -36,6 +36,8 @@ def download_recent_imerg():
         if output_blob in existing_files:
             print(f"{output_blob} already exists, skipping")
             continue
+        else:
+            print(f"downloading and processing {output_blob}")
         download_imerg(date)
         da = process_imerg()
         upload_imerg(da, output_blob)
