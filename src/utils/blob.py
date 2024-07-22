@@ -13,4 +13,10 @@ DEV_BLOB_GLB_URL = (
 
 
 def get_glb_container_client() -> ContainerClient:
+    """
+    Get the container client for the global container
+    Returns
+    -------
+
+    """
     return ContainerClient.from_container_url(DEV_BLOB_GLB_URL)

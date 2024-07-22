@@ -21,6 +21,12 @@ IMERG_BASE_URL = (
 
 
 def download_recent_imerg():
+    """
+    Downloads and processes all IMERG LATE v7 data from 2024-06-01 to yesterday
+    Returns
+    -------
+
+    """
     existing_files = [
         x.name
         for x in blob.get_glb_container_client().list_blobs(
@@ -50,6 +56,25 @@ def download_imerg(
     save_path: str = Path("temp/imerg_temp.nc"),
     verbose: bool = False,
 ):
+    """
+    Downloads IMERG data for a given date and saves it to a temporary file
+    Parameters
+    ----------
+    date: datetime.datetime
+        Date to download
+    run:
+        "E" for early run, "L" for late run
+    version: int
+        IMERG version (7 is technically 07B)
+    save_path: str
+        Temporary path to save the downloaded file
+    verbose:
+        Whether to print out the URL and save path
+
+    Returns
+    -------
+
+    """
     if os.path.exists(save_path):
         os.remove(save_path)
     version_letter = "B" if version == 7 else ""
@@ -85,6 +110,19 @@ def process_imerg(path: str = "temp/imerg_temp.nc"):
 
 
 def upload_imerg(da: xr.DataArray, output_path: str):
+    """
+    Saves DataArray to a temporary file and uploads it to the blob storage
+    Parameters
+    ----------
+    da: xr.DataArray
+        DataArray to upload
+    output_path: str
+        Blob name to upload to
+
+    Returns
+    -------
+
+    """
     with tempfile.NamedTemporaryFile(delete=False, suffix=".tif") as tmpfile:
         temp_filename = tmpfile.name
         da.rio.to_raster(temp_filename, driver="COG")
@@ -95,8 +133,14 @@ def upload_imerg(da: xr.DataArray, output_path: str):
 
 
 def create_auth_files():
-    # script to set credentials from
-    # https://disc.gsfc.nasa.gov/information/howto?title=How%20to%20Generate%20Earthdata%20Prerequisite%20Files
+    """
+    Creates the necessary files for authentication with NASA GES DISC.
+    Taken from
+    https://disc.gsfc.nasa.gov/information/howto?title=How%20to%20Generate%20Earthdata%20Prerequisite%20Files
+    Returns
+    -------
+
+    """
     IMERG_USERNAME = os.environ["IMERG_USERNAME"]
     IMERG_PASSWORD = os.environ["IMERG_PASSWORD"]
 
