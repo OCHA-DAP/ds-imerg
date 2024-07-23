@@ -44,9 +44,13 @@ def download_recent_imerg():
             continue
         else:
             print(f"downloading and processing {output_blob}")
-        download_imerg(date)
-        da = process_imerg()
-        upload_imerg(da, output_blob)
+        try:
+            download_imerg(date)
+            da = process_imerg()
+            upload_imerg(da, output_blob)
+        except Exception as e:
+            print(f"failed to download and process {date}")
+            print(e)
 
 
 def download_imerg(
