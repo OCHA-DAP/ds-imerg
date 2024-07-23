@@ -31,3 +31,11 @@ jobs:
         IMERG_PASSWORD: ${{ secrets.IMERG_PASSWORD }}
       run: |
         python main.py
+
+    - name: Trigger ds-aa-hti-hurricanes observational trigger
+      run: |
+        curl -X POST \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+          https://api.github.com/repos/OCHA-DAP/ds-aa-hti-hurricanes/actions/workflows/run_check_obsv_trigger.yaml/dispatches \
+          -d '{"ref":"main"}'
