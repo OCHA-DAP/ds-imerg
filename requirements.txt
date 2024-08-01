@@ -1,0 +1,6 @@
+azure-storage-blob==12.20.0
+netcdf4==1.7.0
+pandas==2.2.2
+requests==2.32.3
+rioxarray==0.15.5
+xarray==2024.6.0

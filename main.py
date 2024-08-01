@@ -1,2 +1,5 @@
+from src.datasources.imerg import create_auth_files, download_recent_imerg
+
 if __name__ == "__main__":
-    print("test")
+    create_auth_files()
+    download_recent_imerg()
